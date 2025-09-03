@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro Pizze</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f8f8f8; }
+    h1 { text-align: center; }
+    .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    input, button { padding: 10px; margin: 5px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #eee; }
+    .buttons { display: flex; justify-content: space-between; margin-top: 10px; }
+    .delete-btn { background: #d9534f; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Registro Pizze</h1>
+    <label for="comanda">Inserisci comanda (es: 1 margherita o margherita, 2 frutti di mare):</label>
+    <input type="text" id="comanda" placeholder="Es. 1 margherita o 2 frutti di mare" style="width:100%" />
+    <div class="buttons">
+      <button onclick="aggiungiComanda()">Aggiungi Comanda</button>
+      <button onclick="azzeraRegistro()" style="background:red;color:white;">Azzera Tutto</button>
+    </div>
+
+    <h2>Totale Pizze della Serata</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pizza</th>
+          <th>Quantità</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody id="tabella"></tbody>
+    </table>
+    <h3 id="totale"></h3>
+  </div>
+
+  <script>
+    let registro = {};
+
+    function aggiornaTabella() {
+      const tabella = document.getElementById('tabella');
+      tabella.innerHTML = '';
+      let totale = 0;
+      for (let pizza in registro) {
+        let row = `<tr>
+                      <td>${pizza}</td>
+                      <td>${registro[pizza]}</td>
+                      <td><button class="delete-btn" onclick="cancellaPizza('${pizza}')">Cancella</button></td>
+                   </tr>`;
+        tabella.innerHTML += row;
+        totale += registro[pizza];
+      }
+      document.getElementById('totale').innerText = `Totale pizze: ${totale}`;
+      localStorage.setItem('registroPizze', JSON.stringify(registro));
+    }
+
+    function aggiungiComanda() {
+      const testo = document.getElementById('comanda').value.trim();
+      if (!testo) return;
+
+      // Dividi usando la virgola come separatore principale
+      const ordini = testo.split(',');
+      ordini.forEach(o => {
+        let parte = o.trim();
+        if (!parte) return;
+
+        // Controlla se inizia con un numero
+        const match = parte.match(/^(\d+)\s+(.+)$/);
+        let quantita, nome;
+        if (match) {
+          quantita = parseInt(match[1]);
+          nome = match[2].toLowerCase();
+        } else {
+          quantita = 1;
+          nome = parte.toLowerCase();
+        }
+
+        if (registro[nome]) {
+          registro[nome] += quantita;
+        } else {
+          registro[nome] = quantita;
+        }
+      });
+
+      document.getElementById('comanda').value = '';
+      aggiornaTabella();
+    }
+
+    function cancellaPizza(nome) {
+      if (confirm(`Vuoi cancellare la pizza "${nome}" dal registro?`)) {
+        delete registro[nome];
+        aggiornaTabella();
+      }
+    }
+
+    function azzeraRegistro() {
+      if (confirm('Sei sicuro di voler azzerare tutto il registro?')) {
+        registro = {};
+        localStorage.removeItem('registroPizze');
+        aggiornaTabella();
+      }
+    }
+
+    document.getElementById('comanda').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        aggiungiComanda();
+      }
+    });
+
+    window.onload = () => {
+      const salvato = localStorage.getItem('registroPizze');
+      if (salvato) registro = JSON.parse(salvato);
+      aggiornaTabella();
+    }
+  </script>
+</body>
+</html>
