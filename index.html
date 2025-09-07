@@ -2,123 +2,264 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registro Pizze</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prenotazioni Pizzeria</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f8f8f8; }
-    h1 { text-align: center; }
-    .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
-    input, button { padding: 10px; margin: 5px 0; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background: #eee; }
-    .buttons { display: flex; justify-content: space-between; margin-top: 10px; }
-    .delete-btn { background: #d9534f; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+    :root{
+      --green: #28a745;
+      --eggplant: #4b0082;
+      --whatsapp: #25D366;
+      --gap: 10px;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      padding: 0;
+      text-align: center;
+      background: #fff;
+      color: #222;
+    }
+
+    /* Titolo 3D */
+    .titolo3d {
+      font-size: 42px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #ff4500; /* arancione pizza */
+      text-shadow: 
+        2px 2px 0 #000,
+        4px 4px 0 #444,
+        6px 6px 0 #888;
+      margin-bottom: 6px;
+    }
+
+    h2 { margin: 8px 0; font-size: 20px; }
+
+    /* Sala 4x4 */
+    .sala {
+      margin: 12px auto 30px;
+      width: 100%;
+      max-width: 720px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap);
+      justify-items: center;
+      align-items: center;
+    }
+
+    /* Tavolo quadrato */
+    .tavolo {
+      width: 88px;
+      height: 88px;
+      min-width: 72px;
+      min-height: 72px;
+      padding: 8px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+    .tavolo .label { font-weight: 700; font-size: 18px; line-height: 1; }
+    .tavolo .cliente { margin-top: 6px; font-size: 14px; line-height: 1; max-width: 100%; word-break: break-word; }
+
+    .libero { background: var(--green); }
+    .occupato { background: var(--eggplant); }
+
+    /* Form */
+    .form-wrap { margin: 6px auto; max-width: 720px; }
+    form { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="datetime-local"],
+    .whatsapp-btn {
+      width: 95%;
+      max-width: 720px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      font-size: 18px;
+      box-sizing: border-box;
+    }
+
+    input[type="datetime-local"] {
+      font-size: 18px;
+      padding: 12px;
+    }
+
+    .whatsapp-btn {
+      background: var(--whatsapp);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 599px) {
+      .tavolo { width: 84px; height: 84px; }
+      .tavolo .label { font-size: 16px; }
+      .tavolo .cliente { font-size: 15px; }
+      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { font-size: 18px; padding: 12px; width: 96%; }
+    }
+    @media (min-width: 600px) and (max-width: 1024px) {
+      .tavolo { width: 100px; height: 100px; }
+      .tavolo .label { font-size: 20px; }
+      .tavolo .cliente { font-size: 16px; }
+      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { width: 75%; font-size: 20px; padding: 14px; }
+    }
+    @media (min-width: 1025px) {
+      .tavolo { width: 120px; height: 120px; }
+      .tavolo .label { font-size: 22px; }
+      .tavolo .cliente { font-size: 18px; }
+      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { width: 55%; font-size: 20px; padding: 14px; }
+    }
+
+    .info {
+      font-size: 14px;
+      color: #444;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Registro Pizze</h1>
-    <label for="comanda">Inserisci comanda (es: 1 margherita o margherita, 2 frutti di mare):</label>
-    <input type="text" id="comanda" placeholder="Es. 1 margherita o 2 frutti di mare" style="width:100%" />
-    <div class="buttons">
-      <button onclick="aggiungiComanda()">Aggiungi Comanda</button>
-      <button onclick="azzeraRegistro()" style="background:red;color:white;">Azzera Tutto</button>
-    </div>
+  <!-- Titolo modificato -->
+  <h1 class="titolo3d">La Fabbrica della Pizza</h1>
 
-    <h2>Totale Pizze della Serata</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Pizza</th>
-          <th>Quantità</th>
-          <th>Azioni</th>
-        </tr>
-      </thead>
-      <tbody id="tabella"></tbody>
-    </table>
-    <h3 id="totale"></h3>
+  <div class="form-wrap">
+    <h2>Nuova Prenotazione</h2>
+    <form id="formPrenotazione" autocomplete="off">
+      <input type="text" id="nominativo" placeholder="Nominativo (es. Rossi Mario)" required />
+      <input type="number" id="persone" placeholder="Numero persone" min="1" required />
+      <input type="datetime-local" id="data" required />
+      <button type="submit" class="whatsapp-btn">Prenota via WhatsApp</button>
+    </form>
+    <div class="info">Seleziona Data/Ora per vedere i tavoli occupati in quel turno.</div>
   </div>
 
+  <h2>Stato Sala</h2>
+  <div id="sale" class="sala" aria-live="polite"></div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
   <script>
-    let registro = {};
+    /* ---------- CONFIG FIREBASE: sostituisci con i tuoi valori ---------- */
+    const firebaseConfig = {
+      apiKey: "LA_TUA_APIKEY",
+      authDomain: "TUO_PROGETTO.firebaseapp.com",
+      databaseURL: "https://TUO_PROGETTO.firebaseio.com",
+      projectId: "TUO_PROGETTO",
+      storageBucket: "TUO_PROGETTO.appspot.com",
+      messagingSenderId: "TUO_SENDER_ID",
+      appId: "TUO_APP_ID"
+    };
+    /* ------------------------------------------------------------------ */
 
-    function aggiornaTabella() {
-      const tabella = document.getElementById('tabella');
-      tabella.innerHTML = '';
-      let totale = 0;
-      for (let pizza in registro) {
-        let row = `<tr>
-                      <td>${pizza}</td>
-                      <td>${registro[pizza]}</td>
-                      <td><button class="delete-btn" onclick="cancellaPizza('${pizza}')">Cancella</button></td>
-                   </tr>`;
-        tabella.innerHTML += row;
-        totale += registro[pizza];
-      }
-      document.getElementById('totale').innerText = `Totale pizze: ${totale}`;
-      localStorage.setItem('registroPizze', JSON.stringify(registro));
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const numeroWhatsApp = '393493282672';
+
+    const sale = [{ id: 1, nome: "Sala Uno", tavoli: [] }];
+    for (let i = 1; i <= 16; i++) {
+      sale[0].tavoli.push({ id: i, posti: 4, label: 'T' + i });
+    }
+    let prenotazioni = [];
+    let currentDataFilter = null;
+
+    function formatDateTime(dStr) {
+      try {
+        const dt = new Date(dStr);
+        if (isNaN(dt)) return dStr;
+        return dt.toLocaleString();
+      } catch (e) { return dStr; }
     }
 
-    function aggiungiComanda() {
-      const testo = document.getElementById('comanda').value.trim();
-      if (!testo) return;
-
-      // Dividi usando la virgola come separatore principale
-      const ordini = testo.split(',');
-      ordini.forEach(o => {
-        let parte = o.trim();
-        if (!parte) return;
-
-        // Controlla se inizia con un numero
-        const match = parte.match(/^(\d+)\s+(.+)$/);
-        let quantita, nome;
-        if (match) {
-          quantita = parseInt(match[1]);
-          nome = match[2].toLowerCase();
-        } else {
-          quantita = 1;
-          nome = parte.toLowerCase();
-        }
-
-        if (registro[nome]) {
-          registro[nome] += quantita;
-        } else {
-          registro[nome] = quantita;
-        }
+    function renderSale() {
+      const container = document.getElementById('sale');
+      container.innerHTML = '';
+      sale[0].tavoli.forEach(tavolo => {
+        const occ = prenotazioni.find(p => Array.isArray(p.tavoliCoinvolti) && p.tavoliCoinvolti.includes(tavolo.id) && currentDataFilter && p.data === currentDataFilter);
+        const div = document.createElement('div');
+        div.className = 'tavolo ' + (occ ? 'occupato' : 'libero');
+        const clienteTxt = occ ? `${occ.nominativo} (${occ.persone})` : '';
+        div.innerHTML = `<div class="label">${tavolo.label}</div><div class="cliente">${clienteTxt}</div>`;
+        container.appendChild(div);
       });
-
-      document.getElementById('comanda').value = '';
-      aggiornaTabella();
     }
 
-    function cancellaPizza(nome) {
-      if (confirm(`Vuoi cancellare la pizza "${nome}" dal registro?`)) {
-        delete registro[nome];
-        aggiornaTabella();
+    function trovaTavoli(persone, data) {
+      const tavoliLiberi = sale[0].tavoli.filter(t => {
+        return !prenotazioni.some(p => Array.isArray(p.tavoliCoinvolti) && p.tavoliCoinvolti.includes(t.id) && p.data === data);
+      });
+      const tavoliNecessari = Math.ceil(persone / 4);
+      if (tavoliLiberi.length < tavoliNecessari) return null;
+      tavoliLiberi.sort((a,b) => a.id - b.id);
+      const all = sale[0].tavoli.map(t => ({
+        id: t.id, obj: t, libero: tavoliLiberi.some(x => x.id === t.id)
+      }));
+      for (let start = 0; start <= all.length - tavoliNecessari; start++) {
+        let ok = true;
+        const block = [];
+        for (let k = 0; k < tavoliNecessari; k++) {
+          if (!all[start + k].libero) { ok = false; break; }
+          block.push(all[start + k].obj);
+        }
+        if (ok) return block;
       }
+      return tavoliLiberi.slice(0, tavoliNecessari);
     }
 
-    function azzeraRegistro() {
-      if (confirm('Sei sicuro di voler azzerare tutto il registro?')) {
-        registro = {};
-        localStorage.removeItem('registroPizze');
-        aggiornaTabella();
-      }
+    function mandaWhatsApp(numero, messaggio) {
+      const testo = encodeURIComponent(messaggio);
+      const url = `https://api.whatsapp.com/send?phone=${numero}&text=${testo}`;
+      window.open(url, '_blank');
     }
 
-    document.getElementById('comanda').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        aggiungiComanda();
+    const dataInput = document.getElementById('data');
+    dataInput.addEventListener('change', () => {
+      currentDataFilter = dataInput.value || null;
+      renderSale();
+    });
+
+    db.ref('prenotazioni').on('value', snapshot => {
+      const data = snapshot.val();
+      prenotazioni = [];
+      if (data) Object.values(data).forEach(p => prenotazioni.push(p));
+      renderSale();
+    });
+
+    document.getElementById('formPrenotazione').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const nominativo = (document.getElementById('nominativo').value || '').trim();
+      const persone = parseInt(document.getElementById('persone').value, 10);
+      const data = document.getElementById('data').value;
+      if (!nominativo || !persone || !data) { alert('Compila tutti i campi.'); return; }
+      currentDataFilter = data;
+      const tavoliSelezionati = trovaTavoli(persone, data);
+      if (!tavoliSelezionati) { alert('Nessun tavolo disponibile per questo orario.'); return; }
+      const prenotazione = { nominativo, persone, data, tavoliCoinvolti: tavoliSelezionati.map(t => t.id) };
+      try {
+        await db.ref('prenotazioni').push(prenotazione);
+        const dataLeggibile = formatDateTime(data);
+        const tavoliLabels = tavoliSelezionati.map(t => t.label).join(', ');
+        const messaggio = `Prenotazione: ${nominativo} - ${persone} persone - Tavoli: ${tavoliLabels} - Data/Ora: ${dataLeggibile}`;
+        mandaWhatsApp(numeroWhatsApp, messaggio);
+        renderSale();
+        alert(`Prenotazione confermata: Tavoli ${tavoliLabels}`);
+      } catch (err) {
+        console.error(err);
+        alert('Errore durante il salvataggio.');
       }
     });
 
-    window.onload = () => {
-      const salvato = localStorage.getItem('registroPizze');
-      if (salvato) registro = JSON.parse(salvato);
-      aggiornaTabella();
-    }
+    currentDataFilter = dataInput.value || null;
+    renderSale();
   </script>
 </body>
 </html>
