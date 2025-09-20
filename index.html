@@ -20,8 +20,15 @@ header {
   padding: 20px;
   font-family: 'Montserrat', sans-serif;
   font-size: 2em;
+  margin-bottom: 10px;
 }
-#searchBox {
+h2.section-title {
+  text-align: center;
+  color: #A52A2A;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 30px;
+}
+input.search-box {
   width: 90%;
   max-width: 400px;
   margin: 15px auto;
@@ -37,19 +44,19 @@ header {
   gap: 15px;
   padding: 20px;
 }
-.pizza {
+.item {
   background: #fff;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   min-height: 70px;
 }
-.pizza h3 {
+.item h3 {
   margin: 0 0 8px;
   color: #A52A2A;
   font-size: 1.2em;
 }
-.pizza p {
+.item p {
   margin: 3px 0;
   font-size: 0.95em;
 }
@@ -58,7 +65,7 @@ header {
     flex-direction: row;
     flex-wrap: wrap;
   }
-  .pizza {
+  .item {
     flex: 1 1 calc(50% - 20px);
   }
 }
@@ -68,87 +75,69 @@ header {
 
 <header>Fabbrica della Pizza</header>
 
-<input type="text" id="searchBox" placeholder="Cerca per nome, ingrediente o prezzo...">
+<h2 class="section-title">Menu Pizze</h2>
+<input type="text" id="searchPizza" class="search-box" placeholder="Cerca pizze per nome, ingrediente o prezzo...">
+<div class="menu" id="pizzaList">
 
-<div class="menu">
-
-<!-- Inizio lista 99 pizze -->
-
-<div class="pizza" data-name="Marinara" data-ingredients="pomodoro aglio origano" data-price="5.5">
+<!-- Esempio pizze: domani inserirai le 99 -->
+<div class="item pizza" data-name="Marinara" data-ingredients="pomodoro aglio origano" data-price="5.5">
 <h3>1. Marinara - €5,50</h3>
 <p><strong>Ingredienti:</strong> Pomodoro, aglio, origano</p>
 </div>
 
-<div class="pizza" data-name="Margherita" data-ingredients="pomodoro mozzarella basilico" data-price="6">
+<div class="item pizza" data-name="Margherita" data-ingredients="pomodoro mozzarella basilico" data-price="6">
 <h3>2. Margherita - €6,00</h3>
 <p><strong>Ingredienti:</strong> Pomodoro, mozzarella, basilico</p>
 </div>
 
-<div class="pizza" data-name="Napoli" data-ingredients="pomodoro mozzarella acciughe origano" data-price="6.5">
-<h3>3. Napoli - €6,50</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, acciughe, origano</p>
+<!-- Continua con tutte le pizze fino a 99 -->
+
 </div>
 
-<div class="pizza" data-name="Diavola" data-ingredients="pomodoro mozzarella salame piccante" data-price="7.5">
-<h3>4. Diavola - €7,50</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, salame piccante</p>
+<h2 class="section-title">Menu Bevande</h2>
+<input type="text" id="searchDrink" class="search-box" placeholder="Cerca bevande per nome o prezzo...">
+<div class="menu" id="drinkList">
+
+<!-- Esempio bevande: domani puoi aggiungere tutte le tue bevande -->
+<div class="item drink" data-name="Coca Cola" data-price="2">
+<h3>Coca Cola - €2,00</h3>
 </div>
 
-<div class="pizza" data-name="Quattro Formaggi" data-ingredients="mozzarella gorgonzola fontina parmigiano" data-price="8.5">
-<h3>5. Quattro Formaggi - €8,50</h3>
-<p><strong>Ingredienti:</strong> Mozzarella, gorgonzola, fontina, parmigiano</p>
+<div class="item drink" data-name="Acqua Naturale" data-price="1.5">
+<h3>Acqua Naturale - €1,50</h3>
 </div>
 
-<div class="pizza" data-name="Frutti di Mare" data-ingredients="pomodoro mozzarella frutti di mare prezzemolo aglio" data-price="12">
-<h3>6. Frutti di Mare - €12,00</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, frutti di mare, prezzemolo, aglio</p>
+<div class="item drink" data-name="Fanta" data-price="2">
+<h3>Fanta - €2,00</h3>
 </div>
 
-<div class="pizza" data-name="Boscaiola" data-ingredients="mozzarella salsiccia funghi panna" data-price="9.5">
-<h3>7. Boscaiola - €9,50</h3>
-<p><strong>Ingredienti:</strong> Mozzarella, salsiccia, funghi, panna</p>
+<div class="item drink" data-name="Birra" data-price="3">
+<h3>Birra - €3,00</h3>
 </div>
-
-<div class="pizza" data-name="Bufalina" data-ingredients="pomodoro mozzarella di bufala basilico" data-price="9">
-<h3>8. Bufalina - €9,00</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella di bufala, basilico</p>
-</div>
-
-<div class="pizza" data-name="Tartufo" data-ingredients="mozzarella crema di tartufo funghi porcini" data-price="12.5">
-<h3>9. Tartufo - €12,50</h3>
-<p><strong>Ingredienti:</strong> Mozzarella, crema di tartufo, funghi porcini</p>
-</div>
-
-<div class="pizza" data-name="Fabbrica Special" data-ingredients="pomodoro mozzarella di bufala speck rucola grana" data-price="13">
-<h3>10. Fabbrica Special - €13,00</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella di bufala, speck, rucola, scaglie di grana</p>
-</div>
-
-<!-- Da qui si prosegue nello stesso schema fino a 99 pizze -->
-<div class="pizza" data-name="Pizza 11" data-ingredients="pomodoro mozzarella prosciutto" data-price="7.5">
-<h3>11. Pizza 11 - €7,50</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, prosciutto</p>
-</div>
-
-<div class="pizza" data-name="Pizza 12" data-ingredients="pomodoro mozzarella funghi" data-price="7">
-<h3>12. Pizza 12 - €7,00</h3>
-<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, funghi</p>
-</div>
-
-<!-- Inserire tutte le pizze fino a 99 seguendo lo stesso schema -->
 
 </div>
 
 <script>
-const searchBox = document.getElementById("searchBox");
-
-searchBox.addEventListener("keyup", function() {
+// Ricerca pizze
+const searchPizza = document.getElementById("searchPizza");
+searchPizza.addEventListener("keyup", function() {
   const query = this.value.toLowerCase();
   document.querySelectorAll(".pizza").forEach(pizza => {
     const name = pizza.dataset.name.toLowerCase();
     const ingredients = pizza.dataset.ingredients.toLowerCase();
     const price = pizza.dataset.price.toLowerCase();
     pizza.style.display = (name.includes(query) || ingredients.includes(query) || price.includes(query)) ? "block" : "none";
+  });
+});
+
+// Ricerca bevande
+const searchDrink = document.getElementById("searchDrink");
+searchDrink.addEventListener("keyup", function() {
+  const query = this.value.toLowerCase();
+  document.querySelectorAll(".drink").forEach(drink => {
+    const name = drink.dataset.name.toLowerCase();
+    const price = drink.dataset.price.toLowerCase();
+    drink.style.display = (name.includes(query) || price.includes(query)) ? "block" : "none";
   });
 });
 </script>
