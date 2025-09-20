@@ -1,265 +1,157 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prenotazioni Pizzeria</title>
-  <style>
-    :root{
-      --green: #28a745;
-      --eggplant: #4b0082;
-      --whatsapp: #25D366;
-      --gap: 10px;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      margin: 10px;
-      padding: 0;
-      text-align: center;
-      background: #fff;
-      color: #222;
-    }
-
-    /* Titolo 3D */
-    .titolo3d {
-      font-size: 42px;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #ff4500; /* arancione pizza */
-      text-shadow: 
-        2px 2px 0 #000,
-        4px 4px 0 #444,
-        6px 6px 0 #888;
-      margin-bottom: 6px;
-    }
-
-    h2 { margin: 8px 0; font-size: 20px; }
-
-    /* Sala 4x4 */
-    .sala {
-      margin: 12px auto 30px;
-      width: 100%;
-      max-width: 720px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--gap);
-      justify-items: center;
-      align-items: center;
-    }
-
-    /* Tavolo quadrato */
-    .tavolo {
-      width: 88px;
-      height: 88px;
-      min-width: 72px;
-      min-height: 72px;
-      padding: 8px;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    }
-    .tavolo .label { font-weight: 700; font-size: 18px; line-height: 1; }
-    .tavolo .cliente { margin-top: 6px; font-size: 14px; line-height: 1; max-width: 100%; word-break: break-word; }
-
-    .libero { background: var(--green); }
-    .occupato { background: var(--eggplant); }
-
-    /* Form */
-    .form-wrap { margin: 6px auto; max-width: 720px; }
-    form { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="datetime-local"],
-    .whatsapp-btn {
-      width: 95%;
-      max-width: 720px;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid #bbb;
-      font-size: 18px;
-      box-sizing: border-box;
-    }
-
-    input[type="datetime-local"] {
-      font-size: 18px;
-      padding: 12px;
-    }
-
-    .whatsapp-btn {
-      background: var(--whatsapp);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 599px) {
-      .tavolo { width: 84px; height: 84px; }
-      .tavolo .label { font-size: 16px; }
-      .tavolo .cliente { font-size: 15px; }
-      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { font-size: 18px; padding: 12px; width: 96%; }
-    }
-    @media (min-width: 600px) and (max-width: 1024px) {
-      .tavolo { width: 100px; height: 100px; }
-      .tavolo .label { font-size: 20px; }
-      .tavolo .cliente { font-size: 16px; }
-      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { width: 75%; font-size: 20px; padding: 14px; }
-    }
-    @media (min-width: 1025px) {
-      .tavolo { width: 120px; height: 120px; }
-      .tavolo .label { font-size: 22px; }
-      .tavolo .cliente { font-size: 18px; }
-      input[type="text"], input[type="number"], input[type="datetime-local"], .whatsapp-btn { width: 55%; font-size: 20px; padding: 14px; }
-    }
-
-    .info {
-      font-size: 14px;
-      color: #444;
-      margin-top: 6px;
-      margin-bottom: 8px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fabbrica della Pizza - Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #F5F5DC;
+  color: #333;
+}
+header {
+  background-color: #A52A2A;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2em;
+}
+#searchBox {
+  width: 90%;
+  max-width: 400px;
+  margin: 15px auto;
+  display: block;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+.pizza {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-height: 70px;
+}
+.pizza h3 {
+  margin: 0 0 8px;
+  color: #A52A2A;
+  font-size: 1.2em;
+}
+.pizza p {
+  margin: 3px 0;
+  font-size: 0.95em;
+}
+@media(min-width:600px){
+  .menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .pizza {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+</style>
 </head>
 <body>
-  <!-- Titolo modificato -->
-  <h1 class="titolo3d">La Fabbrica della Pizza</h1>
 
-  <div class="form-wrap">
-    <h2>Nuova Prenotazione</h2>
-    <form id="formPrenotazione" autocomplete="off">
-      <input type="text" id="nominativo" placeholder="Nominativo (es. Rossi Mario)" required />
-      <input type="number" id="persone" placeholder="Numero persone" min="1" required />
-      <input type="datetime-local" id="data" required />
-      <button type="submit" class="whatsapp-btn">Prenota via WhatsApp</button>
-    </form>
-    <div class="info">Seleziona Data/Ora per vedere i tavoli occupati in quel turno.</div>
-  </div>
+<header>Fabbrica della Pizza</header>
 
-  <h2>Stato Sala</h2>
-  <div id="sale" class="sala" aria-live="polite"></div>
+<input type="text" id="searchBox" placeholder="Cerca per nome, ingrediente o prezzo...">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<div class="menu">
 
-  <script>
-    /* ---------- CONFIG FIREBASE: sostituisci con i tuoi valori ---------- */
-    const firebaseConfig = {
-      apiKey: "LA_TUA_APIKEY",
-      authDomain: "TUO_PROGETTO.firebaseapp.com",
-      databaseURL: "https://TUO_PROGETTO.firebaseio.com",
-      projectId: "TUO_PROGETTO",
-      storageBucket: "TUO_PROGETTO.appspot.com",
-      messagingSenderId: "TUO_SENDER_ID",
-      appId: "TUO_APP_ID"
-    };
-    /* ------------------------------------------------------------------ */
+<!-- Inizio lista 99 pizze -->
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const numeroWhatsApp = '393493282672';
+<div class="pizza" data-name="Marinara" data-ingredients="pomodoro aglio origano" data-price="5.5">
+<h3>1. Marinara - €5,50</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, aglio, origano</p>
+</div>
 
-    const sale = [{ id: 1, nome: "Sala Uno", tavoli: [] }];
-    for (let i = 1; i <= 16; i++) {
-      sale[0].tavoli.push({ id: i, posti: 4, label: 'T' + i });
-    }
-    let prenotazioni = [];
-    let currentDataFilter = null;
+<div class="pizza" data-name="Margherita" data-ingredients="pomodoro mozzarella basilico" data-price="6">
+<h3>2. Margherita - €6,00</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, basilico</p>
+</div>
 
-    function formatDateTime(dStr) {
-      try {
-        const dt = new Date(dStr);
-        if (isNaN(dt)) return dStr;
-        return dt.toLocaleString();
-      } catch (e) { return dStr; }
-    }
+<div class="pizza" data-name="Napoli" data-ingredients="pomodoro mozzarella acciughe origano" data-price="6.5">
+<h3>3. Napoli - €6,50</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, acciughe, origano</p>
+</div>
 
-    function renderSale() {
-      const container = document.getElementById('sale');
-      container.innerHTML = '';
-      sale[0].tavoli.forEach(tavolo => {
-        const occ = prenotazioni.find(p => Array.isArray(p.tavoliCoinvolti) && p.tavoliCoinvolti.includes(tavolo.id) && currentDataFilter && p.data === currentDataFilter);
-        const div = document.createElement('div');
-        div.className = 'tavolo ' + (occ ? 'occupato' : 'libero');
-        const clienteTxt = occ ? `${occ.nominativo} (${occ.persone})` : '';
-        div.innerHTML = `<div class="label">${tavolo.label}</div><div class="cliente">${clienteTxt}</div>`;
-        container.appendChild(div);
-      });
-    }
+<div class="pizza" data-name="Diavola" data-ingredients="pomodoro mozzarella salame piccante" data-price="7.5">
+<h3>4. Diavola - €7,50</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, salame piccante</p>
+</div>
 
-    function trovaTavoli(persone, data) {
-      const tavoliLiberi = sale[0].tavoli.filter(t => {
-        return !prenotazioni.some(p => Array.isArray(p.tavoliCoinvolti) && p.tavoliCoinvolti.includes(t.id) && p.data === data);
-      });
-      const tavoliNecessari = Math.ceil(persone / 4);
-      if (tavoliLiberi.length < tavoliNecessari) return null;
-      tavoliLiberi.sort((a,b) => a.id - b.id);
-      const all = sale[0].tavoli.map(t => ({
-        id: t.id, obj: t, libero: tavoliLiberi.some(x => x.id === t.id)
-      }));
-      for (let start = 0; start <= all.length - tavoliNecessari; start++) {
-        let ok = true;
-        const block = [];
-        for (let k = 0; k < tavoliNecessari; k++) {
-          if (!all[start + k].libero) { ok = false; break; }
-          block.push(all[start + k].obj);
-        }
-        if (ok) return block;
-      }
-      return tavoliLiberi.slice(0, tavoliNecessari);
-    }
+<div class="pizza" data-name="Quattro Formaggi" data-ingredients="mozzarella gorgonzola fontina parmigiano" data-price="8.5">
+<h3>5. Quattro Formaggi - €8,50</h3>
+<p><strong>Ingredienti:</strong> Mozzarella, gorgonzola, fontina, parmigiano</p>
+</div>
 
-    function mandaWhatsApp(numero, messaggio) {
-      const testo = encodeURIComponent(messaggio);
-      const url = `https://api.whatsapp.com/send?phone=${numero}&text=${testo}`;
-      window.open(url, '_blank');
-    }
+<div class="pizza" data-name="Frutti di Mare" data-ingredients="pomodoro mozzarella frutti di mare prezzemolo aglio" data-price="12">
+<h3>6. Frutti di Mare - €12,00</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, frutti di mare, prezzemolo, aglio</p>
+</div>
 
-    const dataInput = document.getElementById('data');
-    dataInput.addEventListener('change', () => {
-      currentDataFilter = dataInput.value || null;
-      renderSale();
-    });
+<div class="pizza" data-name="Boscaiola" data-ingredients="mozzarella salsiccia funghi panna" data-price="9.5">
+<h3>7. Boscaiola - €9,50</h3>
+<p><strong>Ingredienti:</strong> Mozzarella, salsiccia, funghi, panna</p>
+</div>
 
-    db.ref('prenotazioni').on('value', snapshot => {
-      const data = snapshot.val();
-      prenotazioni = [];
-      if (data) Object.values(data).forEach(p => prenotazioni.push(p));
-      renderSale();
-    });
+<div class="pizza" data-name="Bufalina" data-ingredients="pomodoro mozzarella di bufala basilico" data-price="9">
+<h3>8. Bufalina - €9,00</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella di bufala, basilico</p>
+</div>
 
-    document.getElementById('formPrenotazione').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const nominativo = (document.getElementById('nominativo').value || '').trim();
-      const persone = parseInt(document.getElementById('persone').value, 10);
-      const data = document.getElementById('data').value;
-      if (!nominativo || !persone || !data) { alert('Compila tutti i campi.'); return; }
-      currentDataFilter = data;
-      const tavoliSelezionati = trovaTavoli(persone, data);
-      if (!tavoliSelezionati) { alert('Nessun tavolo disponibile per questo orario.'); return; }
-      const prenotazione = { nominativo, persone, data, tavoliCoinvolti: tavoliSelezionati.map(t => t.id) };
-      try {
-        await db.ref('prenotazioni').push(prenotazione);
-        const dataLeggibile = formatDateTime(data);
-        const tavoliLabels = tavoliSelezionati.map(t => t.label).join(', ');
-        const messaggio = `Prenotazione: ${nominativo} - ${persone} persone - Tavoli: ${tavoliLabels} - Data/Ora: ${dataLeggibile}`;
-        mandaWhatsApp(numeroWhatsApp, messaggio);
-        renderSale();
-        alert(`Prenotazione confermata: Tavoli ${tavoliLabels}`);
-      } catch (err) {
-        console.error(err);
-        alert('Errore durante il salvataggio.');
-      }
-    });
+<div class="pizza" data-name="Tartufo" data-ingredients="mozzarella crema di tartufo funghi porcini" data-price="12.5">
+<h3>9. Tartufo - €12,50</h3>
+<p><strong>Ingredienti:</strong> Mozzarella, crema di tartufo, funghi porcini</p>
+</div>
 
-    currentDataFilter = dataInput.value || null;
-    renderSale();
-  </script>
+<div class="pizza" data-name="Fabbrica Special" data-ingredients="pomodoro mozzarella di bufala speck rucola grana" data-price="13">
+<h3>10. Fabbrica Special - €13,00</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella di bufala, speck, rucola, scaglie di grana</p>
+</div>
+
+<!-- Da qui si prosegue nello stesso schema fino a 99 pizze -->
+<div class="pizza" data-name="Pizza 11" data-ingredients="pomodoro mozzarella prosciutto" data-price="7.5">
+<h3>11. Pizza 11 - €7,50</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, prosciutto</p>
+</div>
+
+<div class="pizza" data-name="Pizza 12" data-ingredients="pomodoro mozzarella funghi" data-price="7">
+<h3>12. Pizza 12 - €7,00</h3>
+<p><strong>Ingredienti:</strong> Pomodoro, mozzarella, funghi</p>
+</div>
+
+<!-- Inserire tutte le pizze fino a 99 seguendo lo stesso schema -->
+
+</div>
+
+<script>
+const searchBox = document.getElementById("searchBox");
+
+searchBox.addEventListener("keyup", function() {
+  const query = this.value.toLowerCase();
+  document.querySelectorAll(".pizza").forEach(pizza => {
+    const name = pizza.dataset.name.toLowerCase();
+    const ingredients = pizza.dataset.ingredients.toLowerCase();
+    const price = pizza.dataset.price.toLowerCase();
+    pizza.style.display = (name.includes(query) || ingredients.includes(query) || price.includes(query)) ? "block" : "none";
+  });
+});
+</script>
+
 </body>
 </html>
